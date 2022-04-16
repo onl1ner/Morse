@@ -1,16 +1,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var languagePair: LanguagePair = .init(
+        leftItem: .english,
+        rightItem: .morse
+    )
+    
     var body: some View {
         NavigationView {
             ScrollView {
-                
+                VStack {
+                    LanguagePairView(languagePair: self.$languagePair)
+                        .frame(maxWidth: .infinity)
+                }
+                .padding(.all, 16.0)
             }
-            .navigationTitle("Morse")
-            .toolbar {
-                Image(systemName: "questionmark.circle.fill")
-                    .foregroundColor(.accentColor)
-            }
+            .navigationTitle("Translator")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
