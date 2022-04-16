@@ -6,7 +6,7 @@ struct ContentView: View {
             ScrollView {
                 
             }
-            .navigationTitle("Morze")
+            .navigationTitle("Morse")
             .toolbar {
                 Image(systemName: "questionmark.circle.fill")
                     .foregroundColor(.accentColor)
