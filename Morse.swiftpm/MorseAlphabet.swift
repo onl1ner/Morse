@@ -67,7 +67,11 @@ struct MorseAlphabet {
         "¡": "--...-"
     ]
     
-    func convert(symbol: String) -> String {
-        return self.alphabet[symbol] ?? ""
+    func morse(for letter: String) -> String {
+        return self.alphabet[letter] ?? ""
+    }
+    
+    func letter(for morse: String) -> String {
+        return self.alphabet.first { $0.value == morse }?.key ?? ""
     }
 }

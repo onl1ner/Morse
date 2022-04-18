@@ -9,6 +9,8 @@ struct ContentView: View {
     @State private var isTranslatable: Bool = false
     @State private var originText: String = ""
     
+    let translator: MorseTranslator
+    
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottom) {
