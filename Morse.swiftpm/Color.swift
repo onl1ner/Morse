@@ -24,4 +24,8 @@ extension Color {
     static var secondaryLabel: Color {
         return .init(UIColor.secondaryLabel)
     }
+    
+    static var placeholderText: Color {
+        return .init(UIColor.placeholderText)
+    }
 }
