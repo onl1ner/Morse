@@ -8,6 +8,9 @@
 import Foundation
 
 struct MorseTranslation {
+    let originLanguage: Language
+    let translationLanguage: Language
+    
     let originTokens: [String]
     let translatedTokens: [String]
     

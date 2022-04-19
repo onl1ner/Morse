@@ -8,6 +8,9 @@ struct ContentView: View {
     
     @State private var isTranslatable: Bool = false
     @State private var originText: String = ""
+    @State private var translation: MorseTranslation?
+    
+    @FocusState private var isEditing: Bool
     
     let translator: MorseTranslator
     
@@ -19,20 +22,54 @@ struct ContentView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 16.0)
                     
-                    VStack(alignment: .leading) {
-                        VStack(alignment: .trailing) {
-                            if self.isTranslatable {
-                                Button {
+                    VStack(alignment: .trailing) {
+                        if self.isTranslatable {
+                            Button {
+                                withAnimation {
                                     self.originText = ""
-                                } label: {
-                                    Image(systemName: "trash")
-                                        .font(.system(size: 18.0))
-                                        .foregroundColor(.accentColor)
+                                    self.translation = nil
+                                    self.isEditing = false
                                 }
+                            } label: {
+                                Image(systemName: "trash")
+                                    .font(.system(size: 18.0))
+                                    .foregroundColor(.accentColor)
+                            }
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 16.0) {
+                            VStack(alignment: .leading) {
+                                if self.translation != nil {
+                                    Text("From \(self.languagePair.leftItem.rawValue)")
+                                        .font(.headline)
+                                        .foregroundColor(.secondaryLabel)
+                                        .transition(.opacity)
+                                }
+                                
+                                TextView(
+                                    placeholder: "Enter text",
+                                    text: self.$originText,
+                                    focus: _isEditing
+                                )
                             }
                             
-                            TextView(placeholder: "Enter text", text: self.$originText)
-                                .frame(height: 300.0)
+                            if let translation = translation {
+                                Group {
+                                    Divider()
+                                    
+                                    ScrollView(showsIndicators: false) {
+                                        VStack(alignment: .leading) {
+                                            Text("To \(self.languagePair.rightItem.rawValue)")
+                                                .font(.headline)
+                                                .foregroundColor(.secondaryLabel)
+                                            
+                                            Text(translation.translatedText)
+                                                .font(.system(size: 32.0, weight: .bold))
+                                        }
+                                    }
+                                }
+                                .transition(.move(edge: .bottom).combined(with: .opacity))
+                            }
                         }
                         
                         Spacer()
@@ -44,9 +81,17 @@ struct ContentView: View {
                     .ignoresSafeArea(.all, edges: .bottom)
                 }
                 
-                if self.isTranslatable {
+                if self.isTranslatable && self.translation == nil {
                     Button {
-                        
+                        withAnimation {
+                            self.translation = self.translator.translate(
+                                text: self.originText,
+                                from: self.languagePair.leftItem,
+                                to: self.languagePair.rightItem
+                            )
+                            
+                            self.isEditing = false
+                        }
                     } label: {
                         Text("Translate!")
                             .font(.headline)
@@ -68,6 +113,13 @@ struct ContentView: View {
         .onChange(of: self.originText) { text in
             withAnimation {
                 self.isTranslatable = !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            }
+        }
+        .onChange(of: self.isEditing) { isEditing in
+            if isEditing {
+                withAnimation {
+                    self.translation = nil
+                }
             }
         }
     }

@@ -8,20 +8,17 @@
 import SwiftUI
 
 struct TextView: View {
-    private let placeholder: String
+    let placeholder: String
     
-    @Binding private var text: String
-    
-    init(placeholder: String, text: Binding<String>) {
-        self.placeholder = placeholder
-        self._text = text
-    }
+    @Binding var text: String
+    @FocusState var focus: Bool
     
     var body: some View {
         ZStack(alignment: .leading) {
             TextEditor(text: self.$text)
                 .font(.system(size: 32.0, weight: .bold))
                 .foregroundColor(.label)
+                .focused(self.$focus)
             
             // Using second TextEditor in order to
             // get same content text paddings.

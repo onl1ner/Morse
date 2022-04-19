@@ -33,6 +33,11 @@ struct MorseTranslator {
             translatedTokens.append(translatedToken.joined())
         }
         
-        return MorseTranslation(originTokens: originTokens, translatedTokens: translatedTokens)
+        return MorseTranslation(
+            originLanguage: originLanguage,
+            translationLanguage: translationLanguage,
+            originTokens: originTokens,
+            translatedTokens: translatedTokens
+        )
     }
 }
