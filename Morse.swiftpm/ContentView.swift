@@ -49,7 +49,7 @@ struct ContentView: View {
                                 TextView(
                                     placeholder: "Enter text",
                                     text: self.$originText,
-                                    focus: _isEditing
+                                    focus: self._isEditing
                                 )
                             }
                             
@@ -63,8 +63,7 @@ struct ContentView: View {
                                                 .font(.headline)
                                                 .foregroundColor(.secondaryLabel)
                                             
-                                            Text(translation.translatedText)
-                                                .font(.system(size: 32.0, weight: .bold))
+                                            TranslationView(translation: translation)
                                         }
                                     }
                                 }
@@ -74,7 +73,7 @@ struct ContentView: View {
                         
                         Spacer()
                     }
-                    .padding(16.0)
+                    .padding(24.0)
                     .frame(maxHeight: .infinity)
                     .background(Color.secondarySystemBackground)
                     .cornerRadius(16.0, corners: [.topLeft, .topRight])
@@ -86,8 +85,7 @@ struct ContentView: View {
                         withAnimation {
                             self.translation = self.translator.translate(
                                 text: self.originText,
-                                from: self.languagePair.leftItem,
-                                to: self.languagePair.rightItem
+                                languagePair: self.languagePair
                             )
                             
                             self.isEditing = false

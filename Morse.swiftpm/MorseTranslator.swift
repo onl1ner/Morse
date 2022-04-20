@@ -10,13 +10,13 @@ import Foundation
 struct MorseTranslator {
     private let alphabet: MorseAlphabet = .init()
     
-    func translate(
-        text: String,
-        from originLanguage: Language,
-        to translationLanguage: Language
-    ) -> MorseTranslation {
-        let originTokens: [String] = text.components(separatedBy: .whitespacesAndNewlines)
+    func translate(text: String, languagePair: LanguagePair) -> MorseTranslation {
+        let translationLanguage = languagePair.rightItem
+        
+        let originTokens: [String] = text
+            .components(separatedBy: .whitespacesAndNewlines)
             .filter { !$0.isEmpty }
+        
         var translatedTokens: [String] = .init()
         
         for token in originTokens {
@@ -34,8 +34,7 @@ struct MorseTranslator {
         }
         
         return MorseTranslation(
-            originLanguage: originLanguage,
-            translationLanguage: translationLanguage,
+            languagePair: languagePair,
             originTokens: originTokens,
             translatedTokens: translatedTokens
         )
