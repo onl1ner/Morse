@@ -32,7 +32,7 @@ struct ContentView: View {
                                 }
                             } label: {
                                 Image(systemName: "trash")
-                                    .font(.system(size: 18.0))
+                                    .font(.system(size: 24.0))
                                     .foregroundColor(.accentColor)
                             }
                         }
@@ -57,15 +57,7 @@ struct ContentView: View {
                                 Group {
                                     Divider()
                                     
-                                    ScrollView(showsIndicators: false) {
-                                        VStack(alignment: .leading) {
-                                            Text("To \(self.languagePair.rightItem.rawValue)")
-                                                .font(.headline)
-                                                .foregroundColor(.secondaryLabel)
-                                            
-                                            TranslationView(translation: translation)
-                                        }
-                                    }
+                                    TranslationView(translation: translation)
                                 }
                                 .transition(.move(edge: .bottom).combined(with: .opacity))
                             }

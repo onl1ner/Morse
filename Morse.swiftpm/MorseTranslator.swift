@@ -25,7 +25,10 @@ struct MorseTranslator {
             for symbol in token {
                 if translationLanguage == .morse {
                     translatedToken.append(self.alphabet.morse(for: String(symbol).uppercased()))
-                    translatedToken.append(" ")
+                    
+                    if symbol != token.last {
+                        translatedToken.append(" ")
+                    }
                 } else {
                     translatedToken.append(self.alphabet.letter(for: String(symbol).uppercased()))
                 }
