@@ -94,9 +94,12 @@ struct TokenView: View {
         if character == "." {
             Image(systemName: "circlebadge.fill")
                 .font(.system(size: self.tokenSize / 2.0, weight: .regular))
-        } else {
+        } else if character == "-" {
             Image(systemName: "minus")
                 .font(.system(size: self.tokenSize, weight: .heavy))
+        } else {
+            Color.clear
+                .frame(width: 8.0, height: self.tokenSize)
         }
     }
 }

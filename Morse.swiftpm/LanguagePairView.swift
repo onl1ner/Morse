@@ -14,13 +14,9 @@ struct LanguagePairView: View {
         HStack {
             self.languageItemView(for: self.languagePair.leftItem)
             
-            Button {
-                self.languagePair.reverse()
-            } label: {
-                Image(systemName: "arrow.triangle.2.circlepath.circle.fill")
-                    .foregroundColor(.accentColor)
-                    .font(.system(size: 24.0))
-            }
+            Image(systemName: "chevron.forward")
+                .foregroundColor(.accentColor)
+                .font(.system(size: 24.0, weight: .semibold))
             
             self.languageItemView(for: self.languagePair.rightItem)
         }
