@@ -10,7 +10,7 @@ import AudioUnit
 import AVFoundation
 
 final class MorseRadioTonePlayer: NSObject {
-    private let timeUnit: CGFloat = 0.4
+    private let timeUnit: CGFloat = 0.2
     
     private var auAudioUnit: AUAudioUnit!
     
@@ -19,7 +19,7 @@ final class MorseRadioTonePlayer: NSObject {
     
     private var sampleRate: Double = 44100.0
     
-    private var frequency = 550.0
+    private var frequency = 750.0
     private var volume = 16383.0
     
     private var toneCount: Int32 = 0
@@ -47,24 +47,23 @@ final class MorseRadioTonePlayer: NSObject {
         self.set(volume: 1.0)
         
         // Base Time Unit.
-        var time = 0.4
+        var time = self.timeUnit
         
         // Short mark should be 1 time unit long;
         // Long mark should be 3 time unit long;
         // Within-character gap should be 1 time unit long.
         if symbol == "." {
-            time = 0.4
+            time = self.timeUnit
         } else if symbol == "-" {
-            time = 1.2
+            time = 3.0 * self.timeUnit 
         } else {
-            time = 0.4
+            time = self.timeUnit
             
             // Setting volume to zero, so
             // we won't play any sound.
             self.set(volume: 0.0)
         }
         
-        self.set(frequency: 550.0)
         self.set(time: time)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + time) {
